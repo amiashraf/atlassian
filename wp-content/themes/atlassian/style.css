@@ -1,0 +1,17 @@
+/*
+Theme Name: Atlassian
+Theme URI: http://www.atlastheme.com/themes/atlassian
+Author: Atlas Theme
+Author URI: http://www.atlastheme.com/
+Description: Master/Blank theme based on Atlas Framework.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: black, green, white, light, dark, two-columns, three-columns, left-sidebar, right-sidebar, fixed-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready, accessibility-ready
+Text Domain: atlassian
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+@import 'css/master.css';
