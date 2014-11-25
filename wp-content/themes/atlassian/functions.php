@@ -679,10 +679,10 @@ class At_Walker_Nav_Menu extends Walker_Nav_Menu{
 }
 
 /*meta field*/
-add_action( 'add_meta_boxes', 'vehicle_specifications_meta_boxes' );
+add_action( 'add_meta_boxes', 'vehicle_post_meta_boxes' );
 
 /* Create one or more meta boxes to be displayed on the post editor screen. */
-function vehicle_specifications_meta_boxes() {
+function vehicle_post_meta_boxes() {
 
     add_meta_box(
         'vehicle-specifications',      // Unique ID
@@ -696,13 +696,82 @@ function vehicle_specifications_meta_boxes() {
 
 /* Display the post meta box. */
 function vehicle_specifications_meta_box( $object, $box ) { ?>
-
-    <?php wp_nonce_field( basename( __FILE__ ), 'vs_chasis_no_nonce' ); ?>
-
+    <?php wp_nonce_field( basename( __FILE__ ), 'vehicle_specifications_nonce' ); ?>
     <p>
-        <label for="vs-chassis-no"><?php _e( "Vehicle Chessis No", 'default' ); ?></label>
+        <label for="vs-model-no"><?php _e( "Model No", 'default' ); ?></label>
         <br />
-        <input class="widefat" type="text" name="vs-chassis-no" id="vs-chassis-no" value="<?php echo esc_attr( get_post_meta( $object->ID, 'vs_chasis_no', true ) ); ?>" size="30" />
+        <input class="widefat" type="text" name="vs-model-no" id="vs-model-no" value="<?php echo esc_attr( get_post_meta( $object->ID, 'vs_model_no', true ) ); ?>" size="30" />
+    </p>
+    <p>
+        <label for="vs-model-year"><?php _e( "Model Year", 'default' ); ?></label>
+        <br />
+        <?php $vs_year=esc_attr( get_post_meta( $object->ID, 'vs_model_year', true ) );
+        ?>
+        <select class="widefat"  name="vs-model-year" id="vs-model-year">
+            <?php for($i=2000;$i<2021;$i++){
+                $sel='';
+                if($i==$vs_year)
+                    $sel="selected";
+            echo "<option value='{$i}' {$sel}>{$i}</option>";
+             } ?>
+        </select>
+    </p>
+    <p>
+        <label for="vs-color"><?php _e( "Color", 'default' ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="vs-color" id="vs-color" value="<?php echo esc_attr( get_post_meta( $object->ID, 'vs_color', true ) ); ?>" size="30" />
+    </p>
+    <p>
+        <label for="vs-cubic-capacity"><?php _e( "Cubic Capacity(CC)", 'default' ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="vs-cubic-capacity" id="vs-cubic-capacity" value="<?php echo esc_attr( get_post_meta( $object->ID, 'vs_cubic_capacity', true ) ); ?>" size="30" />
+    </p>
+    <p>
+        <label for="vs-chassis-no"><?php _e( "Chessis No", 'default' ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="vs-chassis-no" id="vs-chassis-no" value="<?php echo esc_attr( get_post_meta( $object->ID, 'vs_chassis_no', true ) ); ?>" size="30" />
+    </p>
+    <p>
+        <label for="vs-fuel-type"><?php _e( "Fuel type", 'default' ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="vs-fuel-type" id="vs-fuel-type" value="<?php echo esc_attr( get_post_meta( $object->ID, 'vs_fuel_type', true ) ); ?>" size="30" />
+    </p>
+    <p>
+        <label for="vs-stock-availability"><?php _e( "Stock Availability", 'default' ); ?></label>
+        <br />
+        <?php $vs_available=esc_attr( get_post_meta( $object->ID, 'vs_stock_availability', true ) );
+        ?>
+        <select class="widefat"  name="vs-stock-availability" id="vs-stock-availability">
+            <option value="available" <?php if($vs_available=='available'){echo 'selected';}?> >Available</option>
+            <option value="upcoming" <?php if($vs_available=='upcoming'){echo 'selected';}?> >Upcoming</option>
+            <option value="out of stock" <?php if($vs_available=='out of stock'){echo 'selected';}?> >Out of stock</option>
+        </select>
+    </p>
+    <p>
+        <label for="vs-condition"><?php _e( "Condition", 'default' ); ?></label>
+        <br />
+        <?php $vs_available=esc_attr( get_post_meta( $object->ID, 'vs_condition', true ) );
+        ?>
+        <select class="widefat"  name="vs-condition" id="vs-condition">
+            <option value="recondition" <?php if($vs_available=='recondition'){echo 'selected';}?> >Recondition</option>
+            <option value="used" <?php if($vs_available=='used'){echo 'selected';}?> >Used</option>
+            <option value="new" <?php if($vs_available=='new'){echo 'selected';}?> >New</option>
+        </select>
+    </p>
+    <p>
+        <label for="vs-other-specfications"><?php _e( "Other Specifications", 'default' ); ?></label>
+        <br />
+        <textarea class="widefat" type="text" rows="5" name="vs-other-specfications" id="vs-other-specfications" ><?php echo esc_attr( get_post_meta( $object->ID, 'vs_other_specfications', true ) ); ?></textarea>
+    </p>
+    <p>
+        <label for="vs-show-homepage"><?php _e( "Show at homepage", 'default' ); ?></label>
+        <br />
+        <?php $vs_available=esc_attr( get_post_meta( $object->ID, 'vs_show_homepage', true ) );
+        ?>
+        <select class="widefat"  name="vs-show-homepage" id="vs-show-homepage">
+            <option value="no" <?php if($vs_available=='no'){echo 'selected';}?> >no</option>
+            <option value="yes" <?php if($vs_available=='yes'){echo 'selected';}?> >Yes</option>
+        </select>
     </p>
 <?php }
 
@@ -713,7 +782,7 @@ add_action( 'save_post', 'vs_save_post_meta', 10, 2 );
 function vs_save_post_meta( $post_id, $post ) {
 
     /* Verify the nonce before proceeding. */
-    if ( !isset( $_POST['vs_chasis_no_nonce'] ) || !wp_verify_nonce( $_POST['vs_chasis_no_nonce'], basename( __FILE__ ) ) )
+    if ( !isset( $_POST['vehicle_specifications_nonce'] ) || !wp_verify_nonce( $_POST['vehicle_specifications_nonce'], basename( __FILE__ ) ) )
         return $post_id;
 
     /* Get the post type object. */
@@ -723,11 +792,31 @@ function vs_save_post_meta( $post_id, $post ) {
     if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
         return $post_id;
 
-    /* Get the posted data and sanitize it for use as an HTML class. */
-    $new_meta_value = ( isset( $_POST['vs-chassis-no'] ) ? sanitize_html_class( $_POST['vs-chassis-no'] ) : '' );
-
     /* Get the meta key. */
-    $meta_key = 'vs_chasis_no';
+    $meta_keys = array(
+        'vs_model_no'=>'vs-model-no',
+        'vs_model_year'=>'vs-model-year',
+        'vs_color'=>'vs-color',
+        'vs_cubic_capacity'=>'vs-cubic-capacity',
+        'vs_chassis_no'=>'vs-chassis-no',
+        'vs_fuel_type'=>'vs-fuel-type',
+        'vs_stock_availability'=>'vs-stock-availability',
+        'vs_condition'=>'vs-condition',
+        'vs_other_specfications'=>'vs-other-specfications',
+        'vs_show_homepage'=>'vs-show-homepage'
+    );
+
+    foreach($meta_keys as $meta_key=>$meta_field){
+        add_update_delete_postmetadatas($meta_key,$meta_field,$post_id);
+    }
+}
+function add_update_delete_postmetadatas($meta_key,$meta_field,$post_id){
+    /* Get the posted data and sanitize it for use as an HTML class. */
+
+    //todo: need to add proper senitation functon for each meta data
+    //see instruction here http://codex.wordpress.org/Function_Reference/sanitize_meta
+    //$new_meta_value = ( isset( $_POST[$meta_field] ) ? sanitize_html_class( $_POST[$meta_field] ) : '' );
+    $new_meta_value = $_POST[$meta_field];
 
     /* Get the meta value of the custom field key. */
     $meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -745,24 +834,24 @@ function vs_save_post_meta( $post_id, $post ) {
         delete_post_meta( $post_id, $meta_key, $meta_value );
 }
 
-/* Filter the post class hook with our custom post class function. */
-add_filter( 'post_class', 'vs_chasis_no' );
-
-function vs_chasis_no( $classes ) {
-
-    /* Get the current post ID. */
-    $post_id = get_the_ID();
-
-    /* If we have a post ID, proceed. */
-    if ( !empty( $post_id ) ) {
-
-        /* Get the custom post class. */
-        $post_class = get_post_meta( $post_id, 'vs_chasis_no', true );
-
-        /* If a post class was input, sanitize it and add it to the post class array. */
-        if ( !empty( $post_class ) )
-            $classes[] = sanitize_html_class( $post_class );
-    }
-
-    return $classes;
-}
+///* Filter the post class hook with our custom post class function. */
+//add_filter( 'post_class', 'vs_chassis_no' );
+//
+//function vs_chassis_no( $classes ) {
+//
+//    /* Get the current post ID. */
+//    $post_id = get_the_ID();
+//
+//    /* If we have a post ID, proceed. */
+//    if ( !empty( $post_id ) ) {
+//
+//        /* Get the custom post class. */
+//        $post_class = get_post_meta( $post_id, 'vs_other_specfications', true );
+//
+//        /* If a post class was input, sanitize it and add it to the post class array. */
+//        if ( !empty( $post_class ) )
+//            $classes[] = sanitize_html_class( $post_class );
+//    }
+//
+//    return $classes;
+//}
