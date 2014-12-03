@@ -75,8 +75,13 @@ function atlassian_setup() {
 
 	// Enable support for Post Thumbnails, and declare two sizes.
 	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 672, 372, true );
-	add_image_size( 'atlassian-full-width', 1038, 576, true );
+	set_post_thumbnail_size( 369, 200, true );
+	add_image_size( 'full-width', 1600, 900, true );
+	add_image_size( 'home-featured-thumb', 290, 163, true );
+	add_image_size( 'upcoming-thumb', 369, 200, true );
+	add_image_size( 'available-thumb', 170, 120, true );
+	add_image_size( 'categorylist-thumb', 352, 191, true );
+	add_image_size( 'blog-thumb', 870, 300, true );
 
 	// This theme uses wp_nav_menu() in two locations.
 	register_nav_menus( array(
@@ -166,6 +171,8 @@ function atlassian_has_featured_posts() {
 function atlassian_widgets_init() {
 	require get_template_directory() . '/inc/widgets.php';
 	register_widget( 'Atlassian_Ephemera_Widget' );
+	register_widget( 'Atlassian_Upcoming_Cars_Widget' );
+	register_widget( 'Atlassian_Available_Cars_Widget' );
 
 	register_sidebar( array(
 		'name'          => __( 'Primary Sidebar', 'atlassian' ),
@@ -191,6 +198,15 @@ function atlassian_widgets_init() {
 		'description'   => __( 'Appears in the footer section of the site.', 'atlassian' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+	) );
+    register_sidebar( array(
+		'name'          => __( 'Bottom Widget Area', 'atlassian' ),
+		'id'            => 'sidebar-4',
+		'description'   => __( 'Appears in the bottom section of the site.', 'atlassian' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
 		'before_title'  => '<h1 class="widget-title">',
 		'after_title'   => '</h1>',
 	) );
@@ -514,7 +530,7 @@ if ( ! class_exists( 'Featured_Content' ) && 'plugins.php' !== $GLOBALS['pagenow
 	require get_template_directory() . '/inc/featured-content.php';
 }
 
-/*ash changes*/
+/*/////////////////////////////ash changes////////////////////////////////////////////////////////////////////////*/
 function add_footer_js(){
     echo '
         <script type="text/javascript" src="'. get_template_directory_uri().'/js/jquery-1.11.1.min.js"></script>
@@ -855,3 +871,40 @@ function add_update_delete_postmetadatas($meta_key,$meta_field,$post_id){
 //
 //    return $classes;
 //}
+
+
+function get_featured_post($count=4){
+    global $post;
+    $args = array(
+        'posts_per_page'   => $count,
+        'offset'           => 0,
+        'category'         => '',
+        'category_name'    => '',
+        'orderby'          => 'post_date',
+        'order'            => 'DESC',
+        'include'          => '',
+        'exclude'          => '',
+        'meta_key'         => 'vs_show_homepage',
+        'meta_value'       => 'yes',
+        'post_type'        => 'post',
+        'post_mime_type'   => '',
+        'post_parent'      => '',
+        'post_status'      => 'publish',
+        'suppress_filters' => true );
+
+    $the_query = new WP_Query( $args );
+
+    // The Loop
+    if ( $the_query->have_posts() ) {
+        while ( $the_query->have_posts() ) {
+            $the_query->the_post();
+            $featured_image_thumb_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'home-featured-thumb' );
+            $featured_image_full_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full-width' );
+            echo '<div data-thumb="'.$featured_image_thumb_url[0].'" data-src="'.$featured_image_full_url[0].'"> </div>';
+        }
+    } else {
+        // no posts found
+    }
+    /* Restore original Post Data */
+    wp_reset_postdata();
+}

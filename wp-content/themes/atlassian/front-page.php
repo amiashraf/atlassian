@@ -116,26 +116,6 @@
                                     'walker' => $at_walker_obj
                                 )
                             ); ?>
-                            <!--<ul class="nav navbar-nav nav-justified">
-                                <li class="active" ><a href="index.html"><span>Star Trade</span> <small> BEST COLLECTION OF CARS</small> </a></li>
-                                <li ><a href="post.html"><span>Services </span> <small>Services</small></a></li>
-                                <li ><a href="catalog.html" class="dropdown-toggle" data-toggle="dropdown"><span>Catalog<b class="caret"></b></span> <small>List of all cars</small></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="catalog.html">Toyota</a></li>
-                                        <li><a href="catalog.html">Nissan</a></li>
-                                        <li><a href="catalog.html">Honda</a></li>
-                                        <li><a href="catalog.html">Mitsubishi</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#"><span>Warehouse</span> <small>SEE ALL NEWEST MODELS</small></a></li>
-                                <li  ><a href="catalog.html" class="dropdown-toggle" data-toggle="dropdown"><span>Other Concern<b class="caret"></b></span> <small>SHARE YOUR OPINION</small></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="typography.html">Japans car</a></li>
-                                        <li><a href="price-table.html">Automobile Solutions</a></li>
-                                    </ul>
-                                </li>
-                            </ul>-->
                         </div>
                         <div class="mini-search-top">
                             <?php get_search_form(); ?>
@@ -152,52 +132,33 @@
 </header>
 <!-- HEADER END -->
 
-
-
-
 <?php
-$baseurl_upload = wp_upload_dir()['baseurl'];
+    $baseurl_upload = wp_upload_dir()['baseurl'];
 ?>
+
 <!-- HOME SLIDER -->
 <div id="slider">
     <div class="camera_slider">
-        <div data-thumb="<?php echo $baseurl_upload; ?>/media/slider/1.png" data-src="<?php echo $baseurl_upload; ?>/media/slider/1.png"> </div>
-        <div data-thumb="<?php echo $baseurl_upload; ?>/media/slider/2.png" data-src="<?php echo $baseurl_upload; ?>/media/slider/2.png"> </div>
-        <div data-thumb="<?php echo $baseurl_upload; ?>/media/slider/3.png" data-src="<?php echo $baseurl_upload; ?>/media/slider/3.png"> </div>
-        <div data-thumb="<?php echo $baseurl_upload; ?>/media/slider/4.png" data-src="<?php echo $baseurl_upload; ?>/media/slider/4.png"> </div>
+        <?php  get_featured_post();  ?>
     </div>
 </div>
 <!-- HOME SLIDER END -->
-
-<div id="primary" class="content-area">
-    <div id="content" class="site-content" role="main">
 
         <?php
         if ( have_posts() ) :
             // Start the Loop.
             while ( have_posts() ) : the_post();
-
-                /*
-                 * Include the post format-specific template for the content. If you want to
-                 * use this in a child theme, then include a file called called content-___.php
-                 * (where ___ is the post format) and that will be used instead.
-                 */
-                get_template_part( 'content', get_post_format() );
-
+                    the_content();
             endwhile;
-            // Previous/next post navigation.
-            atlassian_paging_nav();
-
         else :
             // If no content, include the "No posts found" template.
             get_template_part( 'content', 'none' );
-
         endif;
         ?>
 
-    </div><!-- #content -->
-</div><!-- #primary -->
-
 <?php
-//get_sidebar();
+if ( ! is_active_sidebar( 'sidebar-3' ) ) {
+    return;
+}
+ dynamic_sidebar( 'sidebar-4' );
 get_footer();

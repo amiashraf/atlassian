@@ -7,5 +7,8 @@
 }
 
 .upcoming-cars span{
-    text-transform:capitalize;
+    text-transform:uppercase;
+}
+.carousel-reviews .bx-controls-direction{
+    left: 163px!important;
 }

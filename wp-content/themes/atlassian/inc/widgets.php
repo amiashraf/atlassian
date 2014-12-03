@@ -267,3 +267,244 @@ class Atlassian_Ephemera_Widget extends WP_Widget {
 		<?php
 	}
 }
+
+class Atlassian_Upcoming_Cars_Widget extends WP_Widget {
+
+    /**
+     * The supported post formats.
+     *
+     * @access private
+     * @since Twenty Fourteen 1.0
+     *
+     * @var array
+     */
+    private $formats = array( 'aside', 'image', 'video', 'audio', 'quote', 'link', 'gallery' );
+
+    /**
+     * Constructor.
+     *
+     * @since Twenty Fourteen 1.0
+     *
+     * @return Atlassian_Ephemera_Widget
+     */
+    public function __construct() {
+        parent::__construct( 'widget_at_upcoming_cars', __( 'Upcoming Cars', 'atlassian' ), array(
+            'classname'   => 'widget_at_upcoming_cars',
+            'description' => __( 'Show all upcoming cars with carousal effect', 'atlassian' ),
+        ) );
+    }
+
+    /**
+     * Output the HTML for this widget.
+     *
+     * @access public
+     * @since Twenty Fourteen 1.0
+     *
+     * @param array $args     An array of standard parameters for widgets in this theme.
+     * @param array $instance An array of settings for this widget instance.
+     */
+    public function widget( $args, $instance ) {
+        $number = empty( $instance['number'] ) ? 2 : absint( $instance['number'] );
+        $title  = apply_filters( 'widget_title', empty( $instance['title'] ) ? $format_string : $instance['title'], $instance, $this->id_base );
+        $args = array(
+            'posts_per_page'   => $number,
+            'offset'           => 0,
+            'category'         => '',
+            'category_name'    => '',
+            'orderby'          => 'post_date',
+            'order'            => 'DESC',
+            'meta_key'         => 'vs_stock_availability',
+            'meta_value'       => 'upcoming',
+            'post_type'        => 'post',
+            'post_status'      => 'publish',
+            'suppress_filters' => true );
+
+        $upcoming_cars = new WP_Query( $args );
+
+        if ( $upcoming_cars->have_posts() ) :
+            ?>
+            <!-- SECTION -->
+            <div class="section-3" >
+                <div class="container">
+                    <div class="row" >
+                        <section class="carousel carousel-reviews">
+                            <div class="carousel-title ">
+                                <div class="transform-please-2 upcoming-cars"> <span> <?php echo $title; ?> </span> </div>
+                            </div>
+                            <ul class="carousel-1">
+                                <?php
+                                while ( $upcoming_cars->have_posts() ) :
+                                    $upcoming_cars->the_post();?>
+                                    <li>
+                                        <div class="media"> <a href="<?php the_permalink();?>"><?php the_post_thumbnail('upcoming-thumb');?></a>
+                                            <div class="carousel-item-content">
+                                                <div class="text-right"><a class="arrow-link" href="<?php the_permalink();?>"> <span class="icon-transform transform-please-2"><i class="fa fa-angle-right"></i></span></a></div>
+                                                <a href="<?php the_permalink();?>" class="transform-please-2 carousel-title"><span><?php the_title('','',true);?></span> </a> </div>
+                                        </div>
+                                        <div class="carousel-text">
+                                            <p> <?php the_excerpt();?></p>
+                                        </div>
+                                        <div class="box-more-info">
+                                            <div class="transform-revers"> <a href="<?php the_permalink(); ?>">READMORE</a></div>
+                                        </div>
+                                    </li>
+                                <?php endwhile; ?>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <!--END-->
+
+            <?php
+            // Reset the post globals as this query will have stomped on it.
+            wp_reset_postdata();
+
+        endif; // End check for ephemeral posts.
+    }
+
+    /**
+     * Deal with the settings when they are saved by the admin.
+     *
+     * Here is where any validation should happen.
+     *
+     * @since Twenty Fourteen 1.0
+     *
+     * @param array $new_instance New widget instance.
+     * @param array $instance     Original widget instance.
+     * @return array Updated widget instance.
+     */
+    function update( $new_instance, $instance ) {
+        $instance['title']  = strip_tags( $new_instance['title'] );
+        $instance['number'] = empty( $new_instance['number'] ) ? 2 : absint( $new_instance['number'] );
+        return $instance;
+    }
+
+    /**
+     * Display the form for this widget on the Widgets page of the Admin area.
+     *
+     * @since Twenty Fourteen 1.0
+     *
+     * @param array $instance
+     */
+    function form( $instance ) {
+        $title  = empty( $instance['title'] ) ? '' : esc_attr( $instance['title'] );
+        $number = empty( $instance['number'] ) ? 2 : absint( $instance['number'] );
+        ?>
+        <p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'atlassian' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>"></p>
+
+        <p><label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of posts to show:', 'atlassian' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="text" value="<?php echo esc_attr( $number ); ?>" size="3"></p>
+    <?php
+    }
+}
+
+class Atlassian_Available_Cars_Widget extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct( 'widget_at_available_cars', __( 'Available Cars', 'atlassian' ), array(
+            'classname'   => 'widget_at_available_cars',
+            'description' => __( 'Show all available cars with carousal effect', 'atlassian' ),
+        ) );
+    }
+
+    /**
+     * Output the HTML for this widget.
+     *
+     * @access public
+     * @since Twenty Fourteen 1.0
+     *
+     * @param array $args     An array of standard parameters for widgets in this theme.
+     * @param array $instance An array of settings for this widget instance.
+     */
+    public function widget( $args, $instance ) {
+        $number = empty( $instance['number'] ) ? 2 : absint( $instance['number'] );
+        $title  = apply_filters( 'widget_title', empty( $instance['title'] ) ? $format_string : $instance['title'], $instance, $this->id_base );
+        $args = array(
+            'posts_per_page'   => $number,
+            'offset'           => 0,
+            'category'         => '',
+            'category_name'    => '',
+            'orderby'          => 'post_date',
+            'order'            => 'DESC',
+            'meta_key'         => 'vs_stock_availability',
+            'meta_value'       => 'available',
+            'post_type'        => 'post',
+            'post_status'      => 'publish',
+            'suppress_filters' => true );
+
+        $available_cars = new WP_Query( $args );
+
+        if ( $available_cars->have_posts() ) :
+            ?>
+            <!-- SECTION -->
+            <div class="section-7">
+                <div class="container">
+                    <div class="row animated " data-animation="bounceInLeft">
+                        <section class="carousel-3">
+                            <div  class="carousel-title ">
+                                <div class="transform-please-2 "> <span> <?php echo $title; ?></span> </div>
+                            </div >
+                            <ul>
+            <?php
+            while ( $available_cars->have_posts() ) :
+                $available_cars->the_post();?>
+                                <li>
+                                    <div class="media"><a  href="<?php the_permalink();?>"><?php the_post_thumbnail('available-thumb');?></a></div>
+                                    <h3><a href="<?php the_permalink();?>"> <?php the_title('','',true);?></a></h3>
+                                    <p><?php the_excerpt();?></p>
+                                    <div class="box-more-info">
+                                        <div class="transform-revers"> <a href="<?php the_permalink();?>">READMORE</a></div>
+                                    </div>
+                                </li>
+            <?php endwhile; ?>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <!-- END -->
+            <?php
+            // Reset the post globals as this query will have stomped on it.
+            wp_reset_postdata();
+
+        endif; // End check for ephemeral posts.
+    }
+
+    /**
+     * Deal with the settings when they are saved by the admin.
+     *
+     * Here is where any validation should happen.
+     *
+     * @since Twenty Fourteen 1.0
+     *
+     * @param array $new_instance New widget instance.
+     * @param array $instance     Original widget instance.
+     * @return array Updated widget instance.
+     */
+    function update( $new_instance, $instance ) {
+        $instance['title']  = strip_tags( $new_instance['title'] );
+        $instance['number'] = empty( $new_instance['number'] ) ? 2 : absint( $new_instance['number'] );
+        return $instance;
+    }
+
+    /**
+     * Display the form for this widget on the Widgets page of the Admin area.
+     *
+     * @since Twenty Fourteen 1.0
+     *
+     * @param array $instance
+     */
+    function form( $instance ) {
+        $title  = empty( $instance['title'] ) ? '' : esc_attr( $instance['title'] );
+        $number = empty( $instance['number'] ) ? 2 : absint( $instance['number'] );
+        ?>
+        <p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'atlassian' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>"></p>
+
+        <p><label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of posts to show:', 'atlassian' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="text" value="<?php echo esc_attr( $number ); ?>" size="3"></p>
+    <?php
+    }
+}
