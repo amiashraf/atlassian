@@ -7,23 +7,22 @@
  * @since Atlassian 1.0
  */
 ?>
-<div id="secondary">
-	<?php
-		$description = get_bloginfo( 'description', 'display' );
-		if ( ! empty ( $description ) ) :
-	?>
-	<h2 class="site-description"><?php echo esc_html( $description ); ?></h2>
-	<?php endif; ?>
+<!-------------------------//////////------------------------------->
+<!-- SIDEBAR -->
+<div class="col-xs-12 col-sm-12 col-md-3">
+<aside class="sidebar">
+<?php dynamic_sidebar( 'sidebar-1' ); ?>
 
-	<?php if ( has_nav_menu( 'secondary' ) ) : ?>
-	<nav role="navigation" class="navigation site-navigation secondary-navigation">
-		<?php wp_nav_menu( array( 'theme_location' => 'secondary' ) ); ?>
-	</nav>
-	<?php endif; ?>
+<!-- FLICKR STREAM -->
+<!--<div class="widget widget-flickr">
+    <h3 class="widget-title"><span>FLICKR photos</span></h3>
+    <ul id="flickr-feed" class="cells-9 img unstyled clearfix" data-items="9">
+    </ul>
+</div>-->
+<!-- // FLICKR STREAM -->
 
-	<?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
-	<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
-		<?php dynamic_sidebar( 'sidebar-1' ); ?>
-	</div><!-- #primary-sidebar -->
-	<?php endif; ?>
-</div><!-- #secondary -->
+</aside>
+</div>
+<!-- // SIDEBAR -->
+<!-------------------------//////////------------------------------->
+
