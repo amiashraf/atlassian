@@ -14,7 +14,7 @@
 		/**
 		 * Fires before the Twenty Fourteen featured content.
 		 *
-		 * @since Twenty Fourteen 1.0
+		 * @since Atlassian  1.0
 		 */
 		do_action( 'atlassian_featured_posts_before' );
 
@@ -29,7 +29,7 @@
 		/**
 		 * Fires after the Twenty Fourteen featured content.
 		 *
-		 * @since Twenty Fourteen 1.0
+		 * @since Atlassian  1.0
 		 */
 		do_action( 'atlassian_featured_posts_after' );
 
