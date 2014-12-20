@@ -30,12 +30,12 @@
  *
  * @see atlassian_content_width()
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 if ( ! isset( $content_width ) ) {
 	$content_width = 474;
 }
-
+add_filter('widget_text', 'do_shortcode');//enabling shortcode at text widget
 /**
  * Twenty Fourteen only works in WordPress 3.6 or later.
  */
@@ -53,7 +53,7 @@ if ( ! function_exists( 'atlassian_setup' ) ) :
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support post thumbnails.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_setup() {
 
@@ -101,9 +101,9 @@ function atlassian_setup() {
 	 * Enable support for Post Formats.
 	 * See http://codex.wordpress.org/Post_Formats
 	 */
-	add_theme_support( 'post-formats', array(
+	/*add_theme_support( 'post-formats', array(
 		'aside', 'image', 'video', 'audio', 'quote', 'link', 'gallery',
-	) );
+	) );*/
 
 	// This theme allows users to set a custom background.
 	add_theme_support( 'custom-background', apply_filters( 'atlassian_custom_background_args', array(
@@ -125,7 +125,7 @@ add_action( 'after_setup_theme', 'atlassian_setup' );
 /**
  * Adjust content_width value for image attachment template.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_content_width() {
 	if ( is_attachment() && wp_attachment_is_image() ) {
@@ -137,7 +137,7 @@ add_action( 'template_redirect', 'atlassian_content_width' );
 /**
  * Getter function for Featured Content Plugin.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @return array An array of WP_Post objects.
  */
@@ -145,7 +145,7 @@ function atlassian_get_featured_posts() {
 	/**
 	 * Filter the featured posts to return in Twenty Fourteen.
 	 *
-	 * @since Twenty Fourteen 1.0
+	 * @since Atlassian  1.0
 	 *
 	 * @param array|bool $posts Array of featured posts, otherwise false.
 	 */
@@ -155,7 +155,7 @@ function atlassian_get_featured_posts() {
 /**
  * A helper conditional function that returns a boolean value.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @return bool Whether there are featured posts.
  */
@@ -166,22 +166,26 @@ function atlassian_has_featured_posts() {
 /**
  * Register three Twenty Fourteen widget areas.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_widgets_init() {
 	require get_template_directory() . '/inc/widgets.php';
-	register_widget( 'Atlassian_Ephemera_Widget' );
-	register_widget( 'Atlassian_Upcoming_Cars_Widget' );
-	register_widget( 'Atlassian_Available_Cars_Widget' );
+	register_widget( 'At_Ephemera_Widget' );
+	register_widget( 'At_Upcoming_Cars_Widget' );
+	register_widget( 'At_Available_Cars_Widget' );
+	register_widget( 'At_Widget_Categories' );
+	register_widget( 'At_WP_Widget_Tag_Cloud' );
+	//register_widget( 'At_Post_Comment_Tab' );
+	register_widget( 'At_Widget_Recent_Posts' );
 
 	register_sidebar( array(
 		'name'          => __( 'Primary Sidebar', 'atlassian' ),
 		'id'            => 'sidebar-1',
 		'description'   => __( 'Main sidebar that appears on the left.', 'atlassian' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-		'before_title'  => '<h1 class="widget-title">',
-		'after_title'   => '</h1>',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
 	) );
 	register_sidebar( array(
 		'name'          => __( 'Content Sidebar', 'atlassian' ),
@@ -216,7 +220,7 @@ add_action( 'widgets_init', 'atlassian_widgets_init' );
 /**
  * Register Lato Google font for Twenty Fourteen.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @return string
  */
@@ -236,7 +240,7 @@ function atlassian_font_url() {
 /**
  * Enqueue scripts and styles for the front end.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_scripts() {
 	// Add Lato font, used in the main stylesheet.
@@ -279,7 +283,7 @@ add_action( 'wp_enqueue_scripts', 'atlassian_scripts' );
 /**
  * Enqueue Google fonts style to admin screen for custom header display.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_admin_fonts() {
 	wp_enqueue_style( 'atlassian-lato', atlassian_font_url(), array(), null );
@@ -290,14 +294,14 @@ if ( ! function_exists( 'atlassian_the_attached_image' ) ) :
 /**
  * Print the attached image with a link to the next attached image.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_the_attached_image() {
 	$post                = get_post();
 	/**
 	 * Filter the default Twenty Fourteen attachment size.
 	 *
-	 * @since Twenty Fourteen 1.0
+	 * @since Atlassian  1.0
 	 *
 	 * @param array $dimensions {
 	 *     An array of height and width dimensions.
@@ -357,7 +361,7 @@ if ( ! function_exists( 'atlassian_list_authors' ) ) :
 /**
  * Print a list of all site contributors who published at least one post.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_list_authors() {
 	$contributor_ids = get_users( array(
@@ -408,7 +412,7 @@ endif;
  * 6. Single views.
  * 7. Featured content layout.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @param array $classes A list of existing body class values.
  * @return array The filtered body class list.
@@ -459,7 +463,7 @@ add_filter( 'body_class', 'atlassian_body_classes' );
  * Adds a post class to denote:
  * Non-password protected page with a post thumbnail.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @param array $classes A list of existing post class values.
  * @return array The filtered post class list.
@@ -477,7 +481,7 @@ add_filter( 'post_class', 'atlassian_post_classes' );
  * Create a nicely formatted and more specific title element text for output
  * in head of document, based on current view.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @global int $paged WordPress archive pagination page count.
  * @global int $page  WordPress paginated post page count.
@@ -850,29 +854,6 @@ function add_update_delete_postmetadatas($meta_key,$meta_field,$post_id){
         delete_post_meta( $post_id, $meta_key, $meta_value );
 }
 
-///* Filter the post class hook with our custom post class function. */
-//add_filter( 'post_class', 'vs_chassis_no' );
-//
-//function vs_chassis_no( $classes ) {
-//
-//    /* Get the current post ID. */
-//    $post_id = get_the_ID();
-//
-//    /* If we have a post ID, proceed. */
-//    if ( !empty( $post_id ) ) {
-//
-//        /* Get the custom post class. */
-//        $post_class = get_post_meta( $post_id, 'vs_other_specfications', true );
-//
-//        /* If a post class was input, sanitize it and add it to the post class array. */
-//        if ( !empty( $post_class ) )
-//            $classes[] = sanitize_html_class( $post_class );
-//    }
-//
-//    return $classes;
-//}
-
-
 function get_featured_post($count=4){
     global $post;
     $args = array(
@@ -908,3 +889,23 @@ function get_featured_post($count=4){
     /* Restore original Post Data */
     wp_reset_postdata();
 }
+
+/*override search html of frontend*/
+function at_override_search_form( $form ) {
+    $form = '<form role="search" method="get" class="searchform" action="'. home_url( '/' ).'">
+    <input type="search" class="search-field" placeholder="'. esc_attr_x( 'Search …', 'placeholder' ) .'" value="'. get_search_query() .'" name="s" title="'. esc_attr_x( 'Search for:', 'label' ) .'" />
+    <input type="submit" class="search-submit" value="'. esc_attr_x( 'Search', 'submit button' ) .'" ></input>
+    <button ><span class="icon-transform transform-please"> <i class="fa fa-search"></i> </span></button>
+    <input type="hidden" value="post" name="post_type" id="post_type" />
+    </form>';
+
+    return $form;
+}
+
+add_filter( 'get_search_form', 'at_override_search_form' );
+
+/*override category widget html of frontend*/
+function at_override_category_html($links){
+    echo $links;
+}
+add_filter('wp_list_categories', 'at_override_category_html');
