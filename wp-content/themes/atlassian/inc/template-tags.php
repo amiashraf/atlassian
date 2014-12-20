@@ -11,7 +11,7 @@ if ( ! function_exists( 'atlassian_paging_nav' ) ) :
 /**
  * Display navigation to next/previous set of posts when applicable.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @global WP_Query   $wp_query   WordPress Query object.
  * @global WP_Rewrite $wp_rewrite WordPress Rewrite object.
@@ -69,7 +69,7 @@ if ( ! function_exists( 'atlassian_post_nav' ) ) :
 /**
  * Display navigation to next/previous post when applicable.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_post_nav() {
 	// Don't print empty markup if there's nowhere to navigate.
@@ -84,15 +84,20 @@ function atlassian_post_nav() {
 	<nav class="navigation post-navigation" role="navigation">
 		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'atlassian' ); ?></h1>
 		<div class="nav-links">
+            <div class="col-xs-12 col-sm-12 text-left">
 			<?php
 			if ( is_attachment() ) :
 				previous_post_link( '%link', __( '<span class="meta-nav">Published In</span>%title', 'atlassian' ) );
 			else :
-				previous_post_link( '%link', __( '<span class="meta-nav">Previous Post</span>%title', 'atlassian' ) );
-				next_post_link( '%link', __( '<span class="meta-nav">Next Post</span>%title', 'atlassian' ) );
+                ?>
+                    <button id="contact-submit" class="btn btn-main btn-primary btn-lg uppercase"><span><i class="fa fa-angle-right"></i><?php previous_post_link( '%link', __( '<span class="meta-nav">%title</span>', 'atlassian' ) ); ?></span></button>
+                    <button id="contact-submit" class="btn btn-main btn-primary btn-lg uppercase"><span><i class="fa fa-angle-right"></i><?php next_post_link( '%link', __( '<span class="meta-nav">%title</span>', 'atlassian' ) ); ?></span></button>
+                <?php
+
 			endif;
 			?>
-		</div><!-- .nav-links -->
+            </div>
+        </div><!-- .nav-links -->
 	</nav><!-- .navigation -->
 	<?php
 }
@@ -102,7 +107,7 @@ if ( ! function_exists( 'atlassian_posted_on' ) ) :
 /**
  * Print HTML with meta information for the current post-date/time and author.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_posted_on() {
 	if ( is_sticky() && is_home() && ! is_paged() ) {
@@ -123,7 +128,7 @@ endif;
 /**
  * Find out if blog has more than one category.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @return boolean true if blog has more than 1 category
  */
@@ -152,7 +157,7 @@ function atlassian_categorized_blog() {
 /**
  * Flush out the transients used in atlassian_categorized_blog.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_category_transient_flusher() {
 	// Like, beat it. Dig?
@@ -167,7 +172,7 @@ add_action( 'save_post',     'atlassian_category_transient_flusher' );
  * Wraps the post thumbnail in an anchor element on index
  * views, or a div element when on single views.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_post_thumbnail() {
 	if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {

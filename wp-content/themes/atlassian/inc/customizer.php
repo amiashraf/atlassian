@@ -10,7 +10,7 @@
 /**
  * Implement Theme Customizer additions and adjustments.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
@@ -61,7 +61,7 @@ add_action( 'customize_register', 'atlassian_customize_register' );
 /**
  * Sanitize the Featured Content layout value.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @param string $layout Layout type.
  * @return string Filtered layout type (grid|slider).
@@ -77,7 +77,7 @@ function atlassian_sanitize_layout( $layout ) {
 /**
  * Bind JS handlers to make Theme Customizer preview reload changes asynchronously.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_customize_preview_js() {
 	wp_enqueue_script( 'atlassian_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20131205', true );
@@ -87,7 +87,7 @@ add_action( 'customize_preview_init', 'atlassian_customize_preview_js' );
 /**
  * Add contextual help to the Themes and Post edit screens.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_contextual_help() {
 	if ( 'admin_head-edit.php' === current_filter() && 'post' !== $GLOBALS['typenow'] ) {

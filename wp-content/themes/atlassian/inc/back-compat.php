@@ -16,7 +16,7 @@
  *
  * Switches to the default theme.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_switch_theme() {
 	switch_theme( WP_DEFAULT_THEME, WP_DEFAULT_THEME );
@@ -31,7 +31,7 @@ add_action( 'after_switch_theme', 'atlassian_switch_theme' );
  * Prints an update nag after an unsuccessful attempt to switch to
  * Twenty Fourteen on WordPress versions prior to 3.6.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_upgrade_notice() {
 	$message = sprintf( __( 'Twenty Fourteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again.', 'atlassian' ), $GLOBALS['wp_version'] );
@@ -41,7 +41,7 @@ function atlassian_upgrade_notice() {
 /**
  * Prevent the Theme Customizer from being loaded on WordPress versions prior to 3.6.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_customize() {
 	wp_die( sprintf( __( 'Twenty Fourteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again.', 'atlassian' ), $GLOBALS['wp_version'] ), '', array(
@@ -53,7 +53,7 @@ add_action( 'load-customize.php', 'atlassian_customize' );
 /**
  * Prevent the Theme Preview from being loaded on WordPress versions prior to 3.4.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_preview() {
 	if ( isset( $_GET['preview'] ) ) {

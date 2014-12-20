@@ -10,7 +10,7 @@
 /**
  * Set up the WordPress core custom header settings.
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  *
  * @uses atlassian_header_style()
  * @uses atlassian_admin_header_style()
@@ -20,7 +20,7 @@ function atlassian_custom_header_setup() {
 	/**
 	 * Filter Twenty Fourteen custom-header support arguments.
 	 *
-	 * @since Twenty Fourteen 1.0
+	 * @since Atlassian  1.0
 	 *
 	 * @param array $args {
 	 *     An array of custom-header support arguments.
@@ -94,7 +94,7 @@ if ( ! function_exists( 'atlassian_admin_header_style' ) ) :
  *
  * @see atlassian_custom_header_setup()
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_admin_header_style() {
 ?>
@@ -132,7 +132,7 @@ if ( ! function_exists( 'atlassian_admin_header_image' ) ) :
  *
  * @see atlassian_custom_header_setup()
  *
- * @since Twenty Fourteen 1.0
+ * @since Atlassian  1.0
  */
 function atlassian_admin_header_image() {
 ?>
