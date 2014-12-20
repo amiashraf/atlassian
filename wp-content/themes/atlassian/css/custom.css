@@ -12,3 +12,160 @@
 .carousel-reviews .bx-controls-direction{
     left: 163px!important;
 }
+
+/*main menu*/
+#main-nav li a span, #main-nav li a small{
+    font-style: italic;
+}
+
+/*mobile menu*/
+#cd-nav.is-fixed ul ul{
+    position: relative!important;
+}
+
+/*category post list page*/
+.list-group .list-group-item .price h2{
+    margin-top: 0;
+}
+/*search widget*/
+.widget_search input[type=search] {
+    border: 1px solid #dddddd;
+    padding: 14px 57px 14px 14px;
+    width: 100%;
+}
+.searchform {
+    position: relative;
+}
+.widget_search input[type=submit] {
+    display: none;
+}
+.widget_search button {
+    background: none repeat scroll 0 0 #000;
+    border: medium none;
+    color: #fff;
+    padding: 7px 10px;
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    transform: rotate(0deg) scale(1.003) skew(-14deg) translate(0px);
+    -webkit-transform: rotate(0deg) scale(1.003) skew(-14deg) translate(0px);
+    -moz-transform: rotate(0deg) scale(1.003) skew(-14deg) translate(0px);
+    -o-transform: rotate(0deg) scale(1.003) skew(-14deg) translate(0px);
+    -ms-transform: rotate(0deg) scale(1.003) skew(-14deg) translate(0px);
+}
+.widget_search button i {
+    transform: rotate(0deg) scale(1.003) skew(26deg) translate(0px);
+    -webkit-transform: rotate(0deg) scale(1.003) skew(14deg) translate(0px);
+    -moz-transform: rotate(0deg) scale(1.003) skew(14deg) translate(0px);
+    -o-transform: rotate(0deg) scale(1.003) skew(14deg) translate(0px);
+    -ms-transform: rotate(0deg) scale(1.003) skew(14deg) translate(0px);
+}
+
+/*top mini search*/
+.mini-search-top {
+    position: absolute;
+    right: 0;
+    top: -50px;
+}
+.mini-search-top:hover input[type="search"] {
+    opacity: 1;
+}
+.mini-search-top input[type="submit"] {
+    display: none;
+}
+.mini-search-top input[type="search"] {
+    opacity: 0;
+    background: none repeat scroll 0 0 #fff;
+    border: 0 none;
+    margin-right: -45px;
+    padding: 12px 60px 12px 12px;
+    transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.mini-search-top button{
+    font-size: 32px;
+    text-transform: uppercase;
+    color: #fff;
+    transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    border: none;
+    background: none;
+}
+.mini-search-top button:hover{
+    text-decoration: none;
+}
+.mini-search-top button:hover .icon-transform {
+    background: none repeat scroll 0 0 #fff;
+}
+.mini-search-top button .icon-transform {
+    display: inline-block;
+    min-width: 44px;
+    text-align: center;
+    padding: 5px 7px;
+    transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.mini-search-top button .icon-transform {
+    padding: 10px;
+    background-color: #d90000;
+}
+.mini-search-top button .icon-transform i {
+    color: #fff;
+    font-size: 17px;
+    margin: 5px;
+    transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.mini-search-top button:hover .icon-transform i{
+    color: #d90000;
+}
+
+/*next gen gallery*/
+.ngg-gallery-thumbnail img{
+     border: none!important;
+    margin: 2px 1px 2px 1px!important;
+}
+
+/*product feature*/
+.row .product-tab{
+    padding-top: 30px;
+}
+.btn-set-section{
+    border-bottom: none!important;
+    margin: 60px auto -30px!important;
+    padding-bottom: 0px!important;
+}
+
+/*footer*/
+.menu-footer-menu-container {
+    text-align: center;
+}
+.menu-footer-menu-container li {
+    display: inline-block;
+    margin: 0 5px;
+}
+.menu-footer-menu-container li a {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.copyright-info a{
+    color: #ffffff;
+}
