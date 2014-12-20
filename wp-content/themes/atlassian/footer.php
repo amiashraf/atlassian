@@ -25,7 +25,7 @@
             <p>BJGroup, Star Trade © All rights reserved <?php the_date('Y'); ?></p>
         </div>
         <div class="row text-center copyright-info">
-            <p>Designed and Developed by <a href="http://www.everexpert.com">EverExpert</a></p>
+            <p>Designed and Developed by <a target="_blank" href="http://www.everexpert.com">EverExpert</a></p>
         </div>
     </div>
 </div>
