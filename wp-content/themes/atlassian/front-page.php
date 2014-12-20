@@ -32,7 +32,7 @@
         <![endif]-->
         <?php wp_head(); ?>
     </head>
-<body <?php body_class(array('noIE','inner-page')); ?>>
+<body <?php body_class(array('noIE')); ?>>
 <!-- Loader -->
 <div id="ip-container" class="ip-container">
     <!-- initial header -->
@@ -51,25 +51,17 @@
 <header id="main-header">
     <div id="cd-nav"> <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
         <nav id="cd-main-nav">
-            <ul>
-                <li class="active"><a href="index.html"><span>Star Trade</span> <small> BEST COLLECTION OF CARS</small> </a></li>
-                <li><a href="blog.html"><span>Services</span> <small>NEWS ABOUT UPCOMING</small></a></li>
-                <li><a href="catalog.html" class="dropdown-toggle" data-toggle="dropdown"><span>Catalog <b class="caret"></b></span> <small>List of all cars</small></a>
-                    <ul>
-                        <li><a href="catalog.html">Toyota</a></li>
-                        <li><a href="catalog.html">Nissan</a></li>
-                        <li><a href="catalog.html">Honda</a></li>
-                        <li><a href="catalog.html">Mitsubishi</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><span>Warehouse</span> <small>SEE ALL NEWEST MODELS</small></a></li>
-                <li><a href="shop.html"  class="dropdown-toggle" data-toggle="dropdown"><span>Other Concern<b class="caret"></b> </span> <small>SHARE YOUR OPINION</small></a>
-                    <ul>
-                        <li><a href="catalog.html">Japans car</a></li>
-                        <li><a href="product.html">Automobile Solutions</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <?php
+            $at_walker_obj = new At_Walker_Nav_Menu();
+            wp_nav_menu(
+                array(
+                    'theme_location' => 'primary',
+                    'menu_class' => 'nav-menu',
+                    'items_wrap' => '<ul>%3$s</ul>',
+                    'walker' => $at_walker_obj
+                )
+            );
+            ?>
         </nav>
     </div>
     <div class="container ">
@@ -80,11 +72,11 @@
                 <div class="navbar navbar-default navbar-top ">
                     <div class="navbar-collapse">
                         <ul class="nav navbar-nav nav-justified">
-                            <li><a href="#"><span>About</span></a></li>
-                            <li class="current" ><a href="#"><span>Automobile</span></a></li>
-                            <li><a href="#"><span>Properties</span></a></li>
-                            <li><a href="#"><span>Agro Aqua</span></a></li>
-                            <li><a href="#"><span>Contact</span></a></li>
+                            <li><a href="<?php echo get_permalink(117)?>"><span>About</span></a></li>
+                            <li <?php if(get_post()->ID==11) echo 'class="current"'; ?> ><a href="http://www.bjgroup-jp.com"><span>Automobile</span></a></li>
+                            <li><a href="http://bj-intl.com/Properties.html" target="_blank"><span>Properties</span></a></li>
+                            <li><a href="http://bj-intl.com/Agro.html"  target="_blank"><span>Agro Aqua</span></a></li>
+                            <li <?php if(get_post()->ID==145) echo 'class="current"'; ?>><a href="<?php echo get_permalink(145);?>"><span>Contact</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -106,7 +98,7 @@
                         <div class="navbar-header"> </div>
                         <div class="navbar-collapse collapse">
                             <?php
-                            $at_walker_obj = new At_Walker_Nav_Menu();
+                            //$at_walker_obj = new At_Walker_Nav_Menu();
 
                             wp_nav_menu(
                                 array(
@@ -119,10 +111,6 @@
                         </div>
                         <div class="mini-search-top">
                             <?php get_search_form(); ?>
-                            <form class="form-mini-search" >
-                                <input type="text" placeholder="Search..">
-                                <button  type="submit" class="arrow-link submit-link"> <span class="icon-transform transform-please"><i class="fa fa-search"></i></span></button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -133,7 +121,8 @@
 <!-- HEADER END -->
 
 <?php
-    $baseurl_upload = wp_upload_dir()['baseurl'];
+    $baseurl_upload = wp_upload_dir();
+    $baseurl_upload = $baseurl_upload['baseurl'];
 ?>
 
 <!-- HOME SLIDER -->
@@ -148,6 +137,7 @@
         if ( have_posts() ) :
             // Start the Loop.
             while ( have_posts() ) : the_post();
+                // show home page content
                     the_content();
             endwhile;
         else :
