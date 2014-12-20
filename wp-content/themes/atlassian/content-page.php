@@ -9,10 +9,16 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <header class="entry-header"><h1 class="entry-title">
+            <div class="carousel-title ">
+                <div class="transform-please-2 upcoming-cars"> <span> <?php the_title(); ?> </span> </div>
+            </div>
+        </h1>
+    </header>
 	<?php
 		// Page thumbnail and title.
 		atlassian_post_thumbnail();
-		the_title( '<header class="entry-header"><h1 class="entry-title">', '</h1></header><!-- .entry-header -->' );
+		//the_title( '<header class="entry-header"><h1 class="entry-title">', '</h1></header><!-- .entry-header -->' );
 	?>
 
 	<div class="entry-content">
